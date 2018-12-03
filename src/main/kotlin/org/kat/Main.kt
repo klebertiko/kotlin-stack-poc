@@ -3,6 +3,7 @@ package org.kat
 import io.javalin.Javalin
 import io.javalin.apibuilder.ApiBuilder.get
 import io.javalin.apibuilder.ApiBuilder.path
+<<<<<<< HEAD
 import io.ktor.application.call
 import io.ktor.http.ContentType
 import io.ktor.response.respondText
@@ -10,6 +11,8 @@ import io.ktor.routing.get
 import io.ktor.routing.routing
 import io.ktor.server.engine.embeddedServer
 import io.ktor.server.netty.Netty
+=======
+>>>>>>> fb5bd0d5cd7c395a72362452a0e05c24bbf59b07
 import org.kat.controllers.ItemController
 import org.kat.models.items
 
