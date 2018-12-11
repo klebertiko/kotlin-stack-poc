@@ -1,12 +1,16 @@
 package integration
 
+import io.ktor.application.Application
 import io.ktor.server.testing.withTestApplication
 import org.junit.jupiter.api.Test
+import org.kat.module
 
 class TestIntegration {
 
     @Test
-    fun `sample test`() = withTestApplication {  }
+    fun `sample test`() = withTestApplication(Application::module){
+
+    }
 
     @Test
     fun `test get item exist`() {
