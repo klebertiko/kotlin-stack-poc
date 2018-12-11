@@ -19,6 +19,7 @@ import io.ktor.routing.routing
 import io.ktor.server.engine.embeddedServer
 import io.ktor.server.netty.Netty
 import org.kat.controllers.ItemController
+import java.util.concurrent.TimeUnit
 
 fun Application.module() {
     install(CORS) {
@@ -38,7 +39,7 @@ fun Application.module() {
             enable(SerializationFeature.INDENT_OUTPUT) // Pretty Prints the JSON
         }
         gson {
-
+            setPrettyPrinting()
         }
     }
 
@@ -61,8 +62,17 @@ fun Application.module() {
     }
 }
 
-class KtorApp(private val port: Int) {
-    fun init() = embeddedServer(factory = Netty, port = port, module = Application::module).start(wait = true)
+class KtorApp(port: Int) {
+
+    private val server = embeddedServer(factory = Netty, port = port, module = Application::module)
+
+    fun start() {
+        server.start(wait = true)
+    }
+
+    fun stop() {
+        server.stop(gracePeriod = 0, timeout = 0, timeUnit = TimeUnit.SECONDS)
+    }
 }
 
 //class JavalinApp(private val port: Int) {
@@ -94,5 +104,5 @@ class KtorApp(private val port: Int) {
 
 fun main(args: Array<String>) {
     //JavalinApp(port = 7000).init()
-    KtorApp(port = 8000).init()
+    KtorApp(port = 8000).start()
 }
