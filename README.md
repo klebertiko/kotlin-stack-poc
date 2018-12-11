@@ -1,1 +1,1 @@
-# kotlin-stack-poc
+kotlin-web-stack
