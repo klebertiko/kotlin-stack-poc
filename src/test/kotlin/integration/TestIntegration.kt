@@ -1,54 +1,46 @@
 package integration
 
 import com.github.kittinunf.fuel.Fuel
-import io.javalin.Javalin
-import io.mockk.impl.annotations.MockK
+import io.ktor.server.engine.ApplicationEngine
 import junit.framework.TestCase
-import org.kat.JavalinApp
-import org.kat.models.Item
-import org.kat.models.items
-import util.toJsonString
+import org.junit.jupiter.api.Test
+import org.kat.KtorApp
+import java.util.concurrent.TimeUnit
 
 class TestIntegration : TestCase() {
 
-    @MockK
-    lateinit var itemMock: Item
-
-    private lateinit var app: Javalin
+    private lateinit var ktorApp: ApplicationEngine
 
     override fun setUp() {
-        app = JavalinApp(7000).init()
+        ktorApp = KtorApp(8000).init()
     }
 
     override fun tearDown() {
-        app.stop()
+        ktorApp.stop(5, 5, TimeUnit.SECONDS)
     }
 
-    fun testDummy() {
-        assertEquals(1, 1)
-    }
-
+    @Test
     fun testGetItemExists() {
-        Fuel.get("http://localhost:7000/api/item/0")
+        Fuel.get("http://localhost:8000/api/item/0")
             .response { request, response, result ->
                 println(request)
                 println(response)
                 println(result)
 
-                val item = response.data.toJsonString()
-                assertEquals(items[0], item)
+                println("response.statusCode: ${response.statusCode}")
                 assertEquals(200, response.statusCode)
             }
-
     }
 
+    @Test
     fun testGetItemNotExist() {
-        Fuel.get("http://localhost:7000/api/item/-1")
+        Fuel.get("http://localhost:8000/api/item/-1")
             .response { request, response, result ->
                 println(request)
                 println(response)
                 println(result)
 
+                println("response.statusCode: ${response.statusCode}")
                 assertEquals(404, response.statusCode)
             }
     }
