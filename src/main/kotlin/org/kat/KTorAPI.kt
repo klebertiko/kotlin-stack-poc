@@ -36,7 +36,7 @@ fun Application.module() {
 
     install(ContentNegotiation) {
         jackson {
-            enable(SerializationFeature.INDENT_OUTPUT) // Pretty Prints the JSON
+            enable(SerializationFeature.INDENT_OUTPUT)
         }
         gson {
             setPrettyPrinting()
@@ -62,7 +62,7 @@ fun Application.module() {
     }
 }
 
-class KtorApp(port: Int) {
+class KTorAPI(port: Int) {
 
     private val server = embeddedServer(factory = Netty, port = port, module = Application::module)
 
@@ -75,34 +75,6 @@ class KtorApp(port: Int) {
     }
 }
 
-//class JavalinApp(private val port: Int) {
-//
-//    private val controller = ItemController(items)
-//
-//    fun init(): Javalin {
-//
-//        val app = Javalin.create().apply {
-//            port(port)
-//            exception(Exception::class.java) { e, _ -> e.printStackTrace() }
-//        }.start()
-//
-//        app.get("/") { ctx -> ctx.result(resultString = "Hello World") }
-//
-//        app.routes {
-//            path("api") {
-//                path("item") {
-//                    path(":id") {
-//                        get { ctx -> controller.getItem(ctx) }
-//                    }
-//                }
-//            }
-//        }
-//        return app
-//    }
-//}
-
-
 fun main(args: Array<String>) {
-    //JavalinApp(port = 7000).init()
-    KtorApp(port = 8000).start()
+    KTorAPI(port = 8000).start()
 }

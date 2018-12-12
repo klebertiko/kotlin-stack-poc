@@ -8,17 +8,16 @@ import com.fasterxml.jackson.module.kotlin.readValue
 import java.nio.file.Paths
 
 
-inline fun <reified T : Any> String.deserialize(): T =
-    jacksonObjectMapper().readValue(this)
+inline fun <reified T : Any> String.deserialize(): T = jacksonObjectMapper().readValue(this)
 
 fun <T> T.toJsonString(): String {
-    return ObjectMapper().writeValueAsString(this)
+    return jacksonObjectMapper().writeValueAsString(this)
 }
 
 fun <T> String.toJsonObject(valueType: Class<T>): T {
-    return ObjectMapper().readValue(this, valueType)
+    return jacksonObjectMapper().readValue(this, valueType)
 }
 
 fun <T> fromJsonFile(jsonFilePath: String, valueType: Class<T>): T {
-    return ObjectMapper().readValue(Paths.get(jsonFilePath).toFile(), valueType)
+    return jacksonObjectMapper().readValue(Paths.get(jsonFilePath).toFile(), valueType)
 }
