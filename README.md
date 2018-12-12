@@ -30,6 +30,9 @@
 ## Mock
 
 * Mockk
+## Static analysis and linter
+
+* detekt
 
 ## Running
 
