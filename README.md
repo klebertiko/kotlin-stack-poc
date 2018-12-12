@@ -29,3 +29,9 @@
 
 * Mockk
 
+
+## Running
+
+* `$ ./gradlew run`
+* Navigate to http://localhost:8000
+
