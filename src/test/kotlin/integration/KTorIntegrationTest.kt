@@ -6,10 +6,7 @@ import io.ktor.http.HttpStatusCode
 import io.ktor.server.testing.handleRequest
 import io.ktor.server.testing.withTestApplication
 import org.junit.jupiter.api.Test
-import org.kat.Message
 import org.kat.module
-import util.deserialize
-import util.toJsonObject
 import kotlin.test.assertEquals
 import kotlin.test.assertNotNull
 
