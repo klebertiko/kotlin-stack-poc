@@ -16,12 +16,13 @@ import io.ktor.response.respond
 import io.ktor.routing.get
 import io.ktor.routing.route
 import io.ktor.routing.routing
+import io.ktor.server.engine.commandLineEnvironment
 import io.ktor.server.engine.embeddedServer
 import io.ktor.server.netty.Netty
 import org.kat.controllers.ItemController
 import java.util.concurrent.TimeUnit
 
-fun Application.module() {
+fun Application.main() {
     install(CORS) {
         method(HttpMethod.Options)
         method(HttpMethod.Get)
@@ -62,19 +63,6 @@ fun Application.module() {
     }
 }
 
-class KTorAPI(port: Int) {
-
-    private val server = embeddedServer(factory = Netty, port = port, module = Application::module)
-
-    fun start() {
-        server.start(wait = true)
-    }
-
-    fun stop() {
-        server.stop(gracePeriod = 0, timeout = 0, timeUnit = TimeUnit.SECONDS)
-    }
-}
-
 fun main(args: Array<String>) {
-    KTorAPI(port = 8000).start()
+    embeddedServer(factory = Netty, environment = commandLineEnvironment(args)).start(wait = true)
 }
