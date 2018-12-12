@@ -2,6 +2,7 @@ plugins {
     id 'org.jetbrains.kotlin.jvm' version '1.3.0'
     id 'java'
     id("io.gitlab.arturbosch.detekt").version("1.0.0-RC11")
+    id 'org.ajoberstar.grgit' version '3.0.0' apply false
 }
 
 group 'org.kat'
@@ -71,9 +72,15 @@ detekt {
 
 test {
     useJUnitPlatform {
-        includeTags 'fast', 'smoke & feature-a'
-        // excludeTags 'slow', 'ci'
         includeEngines 'junit-jupiter', 'junit-vintage'
-        //excludeEngines 'junit-vintage'
+    }
+}
+
+import org.ajoberstar.grgit.Grgit
+
+task cloneKTorSwaggerRepo {
+    doLast {
+        def grgit = Grgit.clone(dir: "$buildDir/ktor-swagger", uri: "https://github.com/nielsfalk/ktor-swagger.git")
+        println grgit.describe()
     }
 }
