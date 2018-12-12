@@ -8,8 +8,8 @@
 
 * Javalin API
 * Javalin Swagger - TO BE STUDIED
-* KTor API
-* KTor Swagger - TO BE DONE
+* Ktor API
+* Ktor Swagger - TO BE DONE
 
 ## HTTP
 
