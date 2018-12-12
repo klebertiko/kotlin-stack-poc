@@ -18,24 +18,23 @@ class JavalinIntegrationTest : TestCase() {
     }
 
     fun `test get item exist`() {
-        Fuel.get("http://localhost:7000/api/item/0")
-            .response { request, response, result ->
-                println(request)
-                println(response)
-                println(result)
+        Fuel.get("http://localhost:7000/api/item/0").response().let {
+            println(it.first)
+            println(it.second)
+            println(it.third)
 
-                assertEquals(200, response.statusCode)
-            }
+            assertEquals(200, it.second.statusCode)
+        }
     }
 
     fun `test get item not exist`() {
         Fuel.get("http://localhost:7000/api/item/-1")
-            .response { request, response, result ->
-                println(request)
-                println(response)
-                println(result)
+            .response().let {
+                println(it.first)
+                println(it.second)
+                println(it.third)
 
-                assertEquals(404, response.statusCode)
+                assertEquals(404, it.second.statusCode)
             }
     }
 }

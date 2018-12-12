@@ -33,6 +33,8 @@ dependencies {
 
     compile 'com.fasterxml.jackson.module:jackson-module-kotlin:2.9.+'
 
+//    compile "khttp:khttp:0.1.0"
+
     detektPlugins 'io.gitlab.arturbosch.detekt:detekt-formatting:1.0.0-RC11'
 
     testCompile 'io.ktor:ktor-server-test-host:1.0.0'
