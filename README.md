@@ -6,8 +6,10 @@
 
 ## REST
 
-* Javalin
-* Trying Ktor, has initial support from community for swagger
+* Javalin API
+* Javalin Swagger - TO BE STUDIED
+* KTor API
+* KTor Swagger - TO BE DONE
 
 ## HTTP
 
@@ -15,11 +17,11 @@
 
 ## Database
 
-* Exposed
+* Exposed - TO BE DONE
 
 ## Dependency Injection
 
-* Koin
+* Koin - TO BE DONE
 
 ## Test
 
@@ -28,7 +30,6 @@
 ## Mock
 
 * Mockk
-
 
 ## Running
 
