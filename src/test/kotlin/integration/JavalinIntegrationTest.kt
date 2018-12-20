@@ -18,7 +18,7 @@ class JavalinIntegrationTest : TestCase() {
     }
 
     fun `test get item exist`() {
-        Fuel.get("http://localhost:7000/api/item/0").response().let {
+        Fuel.get("http://localhost:7000/api/items/0").response().let {
             println(it.first)
             println(it.second)
             println(it.third)
@@ -28,7 +28,7 @@ class JavalinIntegrationTest : TestCase() {
     }
 
     fun `test get item not exist`() {
-        Fuel.get("http://localhost:7000/api/item/-1")
+        Fuel.get("http://localhost:7000/api/items/-1")
             .response().let {
                 println(it.first)
                 println(it.second)

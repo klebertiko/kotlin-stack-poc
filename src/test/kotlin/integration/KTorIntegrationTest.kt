@@ -22,7 +22,7 @@ class KTorIntegrationTest {
 
     @Test
     fun `test get item 0`() = withTestApplication(Application::main) {
-        with(handleRequest(HttpMethod.Get, "/api/item/0")) {
+        with(handleRequest(HttpMethod.Get, "/api/items/0")) {
             assertNotNull(response.content)
             assertEquals(HttpStatusCode.OK, response.status())
         }
