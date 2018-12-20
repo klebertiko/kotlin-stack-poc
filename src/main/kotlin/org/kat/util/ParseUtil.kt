@@ -6,7 +6,6 @@ import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
 import com.fasterxml.jackson.module.kotlin.readValue
 import java.nio.file.Paths
 
-
 inline fun <reified T : Any> String.deserialize(): T = jacksonObjectMapper().readValue(this)
 
 fun <T> T.toJsonString(): String {

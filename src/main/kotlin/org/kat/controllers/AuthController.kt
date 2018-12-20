@@ -2,12 +2,11 @@ package org.kat.controllers
 
 import io.javalin.Context
 import org.kat.Roles
-import org.kat.User
 import org.kat.UserDTO
 import org.kat.users
 import org.kat.util.JwtProvider
 
-class AuthController(private val data: Map<Int, User>) {
+class AuthController {
 
     fun login(ctx: Context): UserDTO {
         val userRequest = ctx.validatedBody<UserDTO>()

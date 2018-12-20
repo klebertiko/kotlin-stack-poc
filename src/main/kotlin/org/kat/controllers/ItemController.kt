@@ -2,12 +2,13 @@ package org.kat.controllers
 
 import io.javalin.Context
 import org.kat.Item
+import org.kat.items
 
-class ItemController(private val data: Map<Int, Item>) {
+class ItemController {
 
     fun getItem(ctx: Context) {
         ctx.pathParam("id").toInt().let {
-            data[it]?.let { item ->
+            items[it]?.let { item ->
                 ctx.json(item)
                 return
             }
@@ -17,7 +18,7 @@ class ItemController(private val data: Map<Int, Item>) {
 
     fun getItem(id: Int) : Item? {
         id.let {
-            data[it]?.let { item ->
+            items[it]?.let { item ->
                 return item
             }
         }

@@ -13,13 +13,12 @@ import kotlin.reflect.KFunction1
 
 internal enum class Roles : Role {
     ANYONE, AUTHENTICATED
-
 }
 
 class JavalinAPI(private val port: Int) {
 
-    private val controller = ItemController(items)
-    private val authController = AuthController(users)
+    private val controller = ItemController()
+    private val authController = AuthController()
 
     fun init(): Javalin {
 
@@ -59,7 +58,7 @@ class JavalinAPI(private val port: Int) {
             return Roles.ANYONE
         }
 
-        val userRole = JwtProvider.decodeJWT(jwtToken!!).getClaim("role").asString()
+        val userRole = JwtProvider.decodeJWT(jwtToken).getClaim("role").asString()
 
         return Roles.valueOf(userRole)
     }
