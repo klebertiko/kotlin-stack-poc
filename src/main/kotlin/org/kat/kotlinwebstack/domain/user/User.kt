@@ -1,4 +1,4 @@
-package org.kat.kotlinwebstack.domain
+package org.kat.kotlinwebstack.domain.user
 
 data class UserDTO(val user: User)
 

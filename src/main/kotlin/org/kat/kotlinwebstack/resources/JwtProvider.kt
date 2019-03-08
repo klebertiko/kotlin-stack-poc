@@ -5,7 +5,7 @@ import com.auth0.jwt.JWTVerifier
 import com.auth0.jwt.algorithms.Algorithm
 import com.auth0.jwt.interfaces.DecodedJWT
 import io.javalin.security.Role
-import org.kat.kotlinwebstack.domain.User
+import org.kat.kotlinwebstack.domain.user.User
 
 object JwtProvider {
 

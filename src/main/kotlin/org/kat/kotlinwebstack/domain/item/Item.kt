@@ -1,4 +1,4 @@
-package org.kat.kotlinwebstack.domain
+package org.kat.kotlinwebstack.domain.item
 
 data class Item(val name: String, val quantity: Int)
 

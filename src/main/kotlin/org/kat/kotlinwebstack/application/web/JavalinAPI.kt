@@ -4,29 +4,31 @@ import io.javalin.Context
 import io.javalin.Javalin
 import io.javalin.UnauthorizedResponse
 import io.javalin.apibuilder.ApiBuilder.*
-import io.javalin.security.Role
 import io.javalin.security.SecurityUtil
 import org.kat.kotlinwebstack.application.web.auth.AuthController
+import org.kat.kotlinwebstack.application.web.auth.Roles
 import org.kat.kotlinwebstack.application.web.item.ItemController
-import org.kat.kotlinwebstack.resources.JwtProvider
+import org.kat.kotlinwebstack.common.javalinModule
+import org.kat.kotlinwebstack.domain.messages
+import org.kat.kotlinwebstack.resources.JwtService
+import org.koin.standalone.KoinComponent
+import org.koin.standalone.StandAloneContext.startKoin
+import org.koin.standalone.inject
 import kotlin.reflect.KFunction1
 
-internal enum class Roles : Role {
-    ANYONE, AUTHENTICATED
-}
+class JavalinAPI(private val port: Int) : KoinComponent {
 
-class JavalinAPI(private val port: Int) {
-
-    private val controller = ItemController()
-    private val authController = AuthController()
+    private val itemController by inject<ItemController>()
+    private val authController by inject<AuthController>()
+    private val jwtService by inject<JwtService>()
 
     fun init(): Javalin {
-
+        startKoin(listOf(javalinModule))
         val app = Javalin.create().apply {
             port(port)
             exception(Exception::class.java) { e, _ -> e.printStackTrace() }
             accessManager { handler, ctx, permittedRoles ->
-                val userRole = getUserRole(ctx)
+                val userRole = jwtService.getUserRole(ctx)
                 if (permittedRoles.contains(userRole)) {
                     handler.handle(ctx)
                 } else {
@@ -39,33 +41,18 @@ class JavalinAPI(private val port: Int) {
             path("api") {
                 path("items") {
                     path(":id") {
-                        get { ctx -> controller.getItem(ctx) }
+                        get { ctx -> itemController.getItem(ctx) }
                     }
                 }
                 path("users") {
                     post("login", { ctx -> asJson(ctx, authController::login) }, SecurityUtil.roles(Roles.ANYONE))
                 }
                 path("messages") {
-                    get({ ctx -> ctx.json("") }, SecurityUtil.roles(Roles.ANYONE))
+                    get({ ctx -> ctx.json(messages) }, SecurityUtil.roles(Roles.ANYONE))
                 }
             }
         }
         return app
-    }
-
-    private fun getUserRole(ctx: Context): Role {
-        val jwtToken = getTokenHeader(ctx)
-        if (jwtToken.isNullOrBlank()) {
-            return Roles.ANYONE
-        }
-
-        val userRole = JwtProvider.decodeJWT(jwtToken).getClaim("role").asString()
-
-        return Roles.valueOf(userRole)
-    }
-
-    private fun getTokenHeader(ctx: Context): String? {
-        return ctx.header(header = "Authorization")?.substringAfter(delimiter = "Token")?.trim()
     }
 
     private fun asJson(ctx: Context, handler: KFunction1<@ParameterName(name = "ctx") Context, Any>) {
@@ -73,6 +60,6 @@ class JavalinAPI(private val port: Int) {
     }
 }
 
-fun main(args: Array<String>) {
+fun main() {
     JavalinAPI(port = 7000).init()
 }

@@ -9,7 +9,6 @@ import org.jetbrains.exposed.sql.SchemaUtils
 import org.jetbrains.exposed.sql.StdOutSqlLogger
 import org.jetbrains.exposed.sql.addLogger
 import org.jetbrains.exposed.sql.transactions.transaction
-import org.kat.kotlinwebstack.resources.toJsonString
 
 object Products: IntIdTable() {
     val name = varchar("name", 50)
