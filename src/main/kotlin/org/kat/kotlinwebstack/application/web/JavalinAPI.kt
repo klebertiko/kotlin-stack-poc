@@ -1,5 +1,6 @@
 package org.kat.kotlinwebstack.application.web
 
+import io.github.resilience4j.circuitbreaker.CircuitBreakerRegistry
 import io.javalin.Context
 import io.javalin.Javalin
 import io.javalin.UnauthorizedResponse
@@ -22,6 +23,7 @@ class JavalinAPI(private val port: Int) : KoinComponent {
     private val authController by inject<AuthController>()
     private val messageController by inject<MessageController>()
     private val jwtService by inject<JwtService>()
+    private val circuitBreaker = CircuitBreakerRegistry.ofDefaults()
 
     fun init(): Javalin {
         startKoin(listOf(javalinModule))
