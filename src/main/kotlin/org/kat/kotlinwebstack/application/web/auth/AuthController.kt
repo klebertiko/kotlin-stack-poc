@@ -1,9 +1,8 @@
 package org.kat.kotlinwebstack.application.web.auth
 
 import io.javalin.Context
-import org.kat.kotlinwebstack.application.web.Roles
-import org.kat.kotlinwebstack.domain.user.UserDTO
-import org.kat.kotlinwebstack.domain.user.users
+import org.kat.kotlinwebstack.domain.auth.UserDTO
+import org.kat.kotlinwebstack.domain.auth.users
 import org.kat.kotlinwebstack.resources.JwtProvider
 
 class AuthController {
