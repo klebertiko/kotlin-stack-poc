@@ -1,4 +1,4 @@
-package org.kat.kotlinwebstack.domain
+package org.kat.kotlinwebstack.domain.message
 
 data class Message(val message: String)
 

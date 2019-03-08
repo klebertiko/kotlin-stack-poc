@@ -8,8 +8,8 @@ import io.javalin.security.SecurityUtil
 import org.kat.kotlinwebstack.application.web.auth.AuthController
 import org.kat.kotlinwebstack.application.web.auth.Roles
 import org.kat.kotlinwebstack.application.web.item.ItemController
+import org.kat.kotlinwebstack.application.web.message.MessageController
 import org.kat.kotlinwebstack.common.javalinModule
-import org.kat.kotlinwebstack.domain.messages
 import org.kat.kotlinwebstack.resources.JwtService
 import org.koin.standalone.KoinComponent
 import org.koin.standalone.StandAloneContext.startKoin
@@ -20,10 +20,12 @@ class JavalinAPI(private val port: Int) : KoinComponent {
 
     private val itemController by inject<ItemController>()
     private val authController by inject<AuthController>()
+    private val messageController by inject<MessageController>()
     private val jwtService by inject<JwtService>()
 
     fun init(): Javalin {
         startKoin(listOf(javalinModule))
+
         val app = Javalin.create().apply {
             port(port)
             exception(Exception::class.java) { e, _ -> e.printStackTrace() }
@@ -36,7 +38,10 @@ class JavalinAPI(private val port: Int) : KoinComponent {
                 }
             }
         }.start()
+        return routes(app)
+    }
 
+    private fun routes(app: Javalin): Javalin {
         app.routes {
             path("api") {
                 path("items") {
@@ -48,7 +53,7 @@ class JavalinAPI(private val port: Int) : KoinComponent {
                     post("login", { ctx -> asJson(ctx, authController::login) }, SecurityUtil.roles(Roles.ANYONE))
                 }
                 path("messages") {
-                    get({ ctx -> ctx.json(messages) }, SecurityUtil.roles(Roles.ANYONE))
+                    get({ ctx -> messageController.showMessages(ctx) }, SecurityUtil.roles(Roles.ANYONE))
                 }
             }
         }

@@ -25,7 +25,7 @@ import io.ktor.server.engine.embeddedServer
 import io.ktor.server.netty.Netty
 import org.kat.kotlinwebstack.application.web.auth.AuthController
 import org.kat.kotlinwebstack.application.web.item.ItemController
-import org.kat.kotlinwebstack.domain.messages
+import org.kat.kotlinwebstack.domain.message.messages
 import org.kat.kotlinwebstack.resources.JwtProvider
 
 fun Application.main() {
