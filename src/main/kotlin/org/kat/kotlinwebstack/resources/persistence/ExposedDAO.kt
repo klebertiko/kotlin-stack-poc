@@ -13,21 +13,25 @@ import org.kat.kotlinwebstack.resources.toJsonString
 
 object Products: IntIdTable() {
     val name = varchar("name", 50)
+    val price = decimal("price", Int.MAX_VALUE, 2)
 }
 
 class Product(id: EntityID<Int>): IntEntity(id) {
     companion object : IntEntityClass<Product>(Products)
 
     var name by Products.name
+    var price by Products.price
 }
 
 object Orders: IntIdTable() {
+    val number = integer(name = "number")
     val product = reference("product", Products)
 }
 
 class Order(id: EntityID<Int>): IntEntity(id) {
     companion object : IntEntityClass<Order>(Orders)
 
+    var number by Orders.number
     var product by Product referencedOn Orders.product
 }
 
@@ -37,20 +41,29 @@ fun main(args: Array<String>) {
     transaction {
         addLogger(StdOutSqlLogger)
 
-        SchemaUtils.create (
-            Products,
-            Orders
-        )
+        SchemaUtils.create(Products, Orders)
 
         val bananaProduct = Product.new {
             name = "Banana"
+            price = 10.2.toBigDecimal()
+        }
+
+        val appleProduct = Product.new {
+            name = "Apple"
+            price = 20.2.toBigDecimal()
         }
 
         Order.new {
+            number = 1
             product = bananaProduct
         }
 
-        println("Prodcuts: ${Product.all().joinToString { it.name }}")
-        println("Orders: ${Order.all().joinToString { it.product.toJsonString() }}")
+        Order.new {
+            number = 2
+            product = appleProduct
+        }
+
+        println("Prodcuts\n-----------------\n${Product.all().joinToString { "${it.name}" }}")
+        println("Orders\n-----------------\n${Order.all().joinToString { "Number: ${it.number}\tItem: ${it.product.name}" }}")
     }
 }
