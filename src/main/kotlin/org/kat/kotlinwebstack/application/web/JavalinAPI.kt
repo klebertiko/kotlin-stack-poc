@@ -48,7 +48,7 @@ class JavalinAPI(private val port: Int) : KoinComponent {
                     path(":id") {
                         get { ctx -> itemController.getItem(ctx) }
                     }
-                    post("add") { ctx -> itemController::addItem }
+                    post("add") { itemController::addItem }
                 }
                 path("users") {
                     post("login", { ctx -> asJson(ctx, authController::login) }, SecurityUtil.roles(Roles.ANYONE))

@@ -63,6 +63,6 @@ fun main(args: Array<String>) {
         }
 
         println("Prodcuts\n-----------------\n${Product.all().joinToString { "${it.name}" }}")
-        println("Orders\n-----------------\n${Order.all().joinToString { "Number: ${it.number}\tItem: ${it.product.name}" }}")
+        println("Orders\n-----------------\n${Order.all().joinToString { "Number: ${it.number}\tItemDTO: ${it.product.name}" }}")
     }
 }
