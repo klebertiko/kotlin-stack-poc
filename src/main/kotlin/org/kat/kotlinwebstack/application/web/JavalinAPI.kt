@@ -1,4 +1,4 @@
-package org.kat
+package org.kat.kotlinwebstack.application.web
 
 import io.javalin.Context
 import io.javalin.Javalin
@@ -6,9 +6,9 @@ import io.javalin.UnauthorizedResponse
 import io.javalin.apibuilder.ApiBuilder.*
 import io.javalin.security.Role
 import io.javalin.security.SecurityUtil
-import org.kat.controllers.AuthController
-import org.kat.controllers.ItemController
-import org.kat.util.JwtProvider
+import org.kat.kotlinwebstack.application.web.auth.AuthController
+import org.kat.kotlinwebstack.application.web.item.ItemController
+import org.kat.kotlinwebstack.resources.JwtProvider
 import kotlin.reflect.KFunction1
 
 internal enum class Roles : Role {
@@ -35,8 +35,6 @@ class JavalinAPI(private val port: Int) {
             }
         }.start()
 
-        app.get("/") { ctx -> ctx.json(mapOf("messages" to messages)) }
-
         app.routes {
             path("api") {
                 path("items") {
@@ -46,6 +44,9 @@ class JavalinAPI(private val port: Int) {
                 }
                 path("users") {
                     post("login", { ctx -> asJson(ctx, authController::login) }, SecurityUtil.roles(Roles.ANYONE))
+                }
+                path("messages") {
+                    get({ ctx -> ctx.json("") }, SecurityUtil.roles(Roles.ANYONE))
                 }
             }
         }

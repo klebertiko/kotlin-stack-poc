@@ -1,8 +1,8 @@
-package org.kat.controllers
+package org.kat.kotlinwebstack.application.web.item
 
 import io.javalin.Context
-import org.kat.Item
-import org.kat.items
+import org.kat.kotlinwebstack.domain.Item
+import org.kat.kotlinwebstack.domain.items
 
 class ItemController {
 

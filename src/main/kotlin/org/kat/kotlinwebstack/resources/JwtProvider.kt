@@ -1,11 +1,11 @@
-package org.kat.util
+package org.kat.kotlinwebstack.resources
 
 import com.auth0.jwt.JWT
 import com.auth0.jwt.JWTVerifier
 import com.auth0.jwt.algorithms.Algorithm
 import com.auth0.jwt.interfaces.DecodedJWT
 import io.javalin.security.Role
-import org.kat.User
+import org.kat.kotlinwebstack.domain.User
 
 object JwtProvider {
 

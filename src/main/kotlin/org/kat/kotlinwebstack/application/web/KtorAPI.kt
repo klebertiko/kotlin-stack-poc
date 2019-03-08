@@ -1,4 +1,4 @@
-package org.kat
+package org.kat.kotlinwebstack.application.web
 
 import com.fasterxml.jackson.databind.SerializationFeature
 import io.ktor.application.Application
@@ -23,9 +23,10 @@ import io.ktor.routing.routing
 import io.ktor.server.engine.commandLineEnvironment
 import io.ktor.server.engine.embeddedServer
 import io.ktor.server.netty.Netty
-import org.kat.controllers.AuthController
-import org.kat.controllers.ItemController
-import org.kat.util.JwtProvider
+import org.kat.kotlinwebstack.application.web.auth.AuthController
+import org.kat.kotlinwebstack.application.web.item.ItemController
+import org.kat.kotlinwebstack.domain.messages
+import org.kat.kotlinwebstack.resources.JwtProvider
 
 fun Application.main() {
 
