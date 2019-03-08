@@ -25,7 +25,7 @@ plugins {
 
 group "org.kat"
 version "1.0.0-SNAPSHOT"
-mainClassName = "org.kat.JavalinAPIKt"
+mainClassName = "org.kat.kotlinwebstack.application.web.JavalinAPIKt"
 
 sourceSets {
     main.java.srcDirs += "src/main/kotlin"
