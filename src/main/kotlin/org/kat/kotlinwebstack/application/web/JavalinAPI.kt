@@ -12,6 +12,7 @@ import org.kat.kotlinwebstack.application.web.item.ItemController
 import org.kat.kotlinwebstack.application.web.message.MessageController
 import org.kat.kotlinwebstack.common.javalinModule
 import org.kat.kotlinwebstack.resources.JwtService
+import org.koin.core.KoinProperties
 import org.koin.standalone.KoinComponent
 import org.koin.standalone.StandAloneContext.startKoin
 import org.koin.standalone.inject
@@ -26,7 +27,7 @@ class JavalinAPI(private val port: Int) : KoinComponent {
     private val circuitBreaker = CircuitBreakerRegistry.ofDefaults()
 
     fun init(): Javalin {
-        startKoin(listOf(javalinModule))
+        startKoin(listOf(javalinModule), KoinProperties(useEnvironmentProperties = true, useKoinPropertiesFile = true))
 
         val app = Javalin.create().apply {
             port(port)
