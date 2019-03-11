@@ -1,4 +1,4 @@
-package org.kat.controllers
+package org.kat.kotlinwebstack.application.web.item
 
 import io.javalin.Context
 import io.mockk.Runs
@@ -9,7 +9,6 @@ import io.mockk.just
 import io.mockk.verify
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.extension.ExtendWith
-import org.kat.items
 import kotlin.test.assertNotNull
 
 @ExtendWith(MockKExtension::class)
@@ -19,11 +18,10 @@ class ItemControllerTest {
     lateinit var context: Context
 
     @MockK
-    lateinit var controller: ItemController
+    var controller = ItemController()
 
     @Test
     fun getItemKTorAPI() {
-        val controller = ItemController(items)
         val item = controller.getItem(0)
         assertNotNull(item)
         assertNotNull(item.name)

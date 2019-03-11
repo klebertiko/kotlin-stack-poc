@@ -17,6 +17,11 @@ import org.koin.standalone.KoinComponent
 import org.koin.standalone.StandAloneContext.startKoin
 import org.koin.standalone.inject
 import kotlin.reflect.KFunction1
+import java.time.Duration.ofMillis
+import io.github.resilience4j.circuitbreaker.CircuitBreakerConfig
+import java.time.Duration
+import io.github.resilience4j.circuitbreaker.CircuitBreaker
+import io.vavr.CheckedFunction0
 
 class JavalinAPI(private val port: Int) : KoinComponent {
 
@@ -24,7 +29,12 @@ class JavalinAPI(private val port: Int) : KoinComponent {
     private val authController by inject<AuthController>()
     private val messageController by inject<MessageController>()
     private val jwtService by inject<JwtService>()
-    private val circuitBreaker = CircuitBreakerRegistry.ofDefaults()
+
+    private val circuitBreakerConfig: CircuitBreakerConfig = CircuitBreakerConfig.ofDefaults()
+
+    private val circuitBreakerRegistry = CircuitBreakerRegistry.of(circuitBreakerConfig)
+    private val circuitBreaker = circuitBreakerRegistry.circuitBreaker("globalCircuitBreaker", circuitBreakerConfig)
+    private var decoratedSupplier = CircuitBreaker.decorateCheckedSupplier(circuitBreaker) { "Hello" }
 
     fun init(): Javalin {
         startKoin(listOf(javalinModule), KoinProperties(useEnvironmentProperties = true, useKoinPropertiesFile = true))
@@ -40,8 +50,9 @@ class JavalinAPI(private val port: Int) : KoinComponent {
                     throw UnauthorizedResponse()
                 }
             }
+
+            enableCorsForAllOrigins()
         }.start()
-        app.enableCorsForAllOrigins()
         return routes(app)
     }
 

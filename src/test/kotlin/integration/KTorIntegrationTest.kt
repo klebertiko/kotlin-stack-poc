@@ -6,7 +6,7 @@ import io.ktor.http.HttpStatusCode
 import io.ktor.server.testing.handleRequest
 import io.ktor.server.testing.withTestApplication
 import org.junit.jupiter.api.Test
-import org.kat.main
+import org.kat.kotlinwebstack.application.web.main
 import kotlin.test.assertEquals
 import kotlin.test.assertNotNull
 
