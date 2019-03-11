@@ -1,6 +1,6 @@
 @file:JvmName("ParserUtil")
 
-package org.kat.kotlinwebstack.resources.utils
+package org.kat.kotlinwebstack.commons.utils
 
 import com.fasterxml.jackson.module.kotlin.KotlinModule
 import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper

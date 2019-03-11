@@ -1,6 +1,5 @@
 package org.kat.kotlinwebstack.application.web
 
-import io.github.resilience4j.circuitbreaker.CircuitBreakerRegistry
 import io.javalin.Context
 import io.javalin.Javalin
 import io.javalin.UnauthorizedResponse
@@ -10,18 +9,13 @@ import org.kat.kotlinwebstack.application.web.auth.AuthController
 import org.kat.kotlinwebstack.application.web.auth.Roles
 import org.kat.kotlinwebstack.application.web.item.ItemController
 import org.kat.kotlinwebstack.application.web.message.MessageController
-import org.kat.kotlinwebstack.common.javalinModule
+import org.kat.kotlinwebstack.commons.javalinModule
 import org.kat.kotlinwebstack.resources.JwtService
 import org.koin.core.KoinProperties
 import org.koin.standalone.KoinComponent
 import org.koin.standalone.StandAloneContext.startKoin
 import org.koin.standalone.inject
 import kotlin.reflect.KFunction1
-import java.time.Duration.ofMillis
-import io.github.resilience4j.circuitbreaker.CircuitBreakerConfig
-import java.time.Duration
-import io.github.resilience4j.circuitbreaker.CircuitBreaker
-import io.vavr.CheckedFunction0
 
 class JavalinAPI(private val port: Int) : KoinComponent {
 
@@ -29,12 +23,6 @@ class JavalinAPI(private val port: Int) : KoinComponent {
     private val authController by inject<AuthController>()
     private val messageController by inject<MessageController>()
     private val jwtService by inject<JwtService>()
-
-    private val circuitBreakerConfig: CircuitBreakerConfig = CircuitBreakerConfig.ofDefaults()
-
-    private val circuitBreakerRegistry = CircuitBreakerRegistry.of(circuitBreakerConfig)
-    private val circuitBreaker = circuitBreakerRegistry.circuitBreaker("globalCircuitBreaker", circuitBreakerConfig)
-    private var decoratedSupplier = CircuitBreaker.decorateCheckedSupplier(circuitBreaker) { "Hello" }
 
     fun init(): Javalin {
         startKoin(listOf(javalinModule), KoinProperties(useEnvironmentProperties = true, useKoinPropertiesFile = true))
@@ -61,9 +49,9 @@ class JavalinAPI(private val port: Int) : KoinComponent {
             path("api") {
                 path("items") {
                     path(":id") {
-                        get { ctx -> itemController.getItem(ctx) }
+                        get({ ctx -> itemController.getItem(ctx) }, SecurityUtil.roles(Roles.ANYONE))
                     }
-                    post("add") { itemController::addItem }
+                    post("add", { itemController::addItem }, SecurityUtil.roles(Roles.ANYONE))
                 }
                 path("users") {
                     post("login", { ctx -> asJson(ctx, authController::login) }, SecurityUtil.roles(Roles.ANYONE))

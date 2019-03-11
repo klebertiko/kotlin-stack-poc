@@ -1,4 +1,4 @@
-package org.kat.kotlinwebstack.common
+package org.kat.kotlinwebstack.commons
 
 import org.kat.kotlinwebstack.application.web.auth.AuthController
 import org.kat.kotlinwebstack.application.web.item.ItemController

@@ -4,7 +4,7 @@ import io.javalin.Context
 import org.kat.kotlinwebstack.domain.item.ItemDTO
 import org.kat.kotlinwebstack.domain.item.items
 import org.kat.kotlinwebstack.resources.persistence.ItemRepository
-import org.kat.kotlinwebstack.resources.utils.toJsonObject
+import org.kat.kotlinwebstack.commons.utils.toJsonObject
 import org.koin.standalone.KoinComponent
 import org.koin.standalone.inject
 
