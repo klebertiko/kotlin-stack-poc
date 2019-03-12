@@ -11,7 +11,6 @@ import org.http4k.traffic.ReadWriteStream
 import org.http4k.traffic.Responder
 import org.kat.kotlinwebstack.application.web.JavalinAPI
 
-
 class JavalinIntegrationTest : TestCase() {
 
 //    private lateinit var app: Javalin
