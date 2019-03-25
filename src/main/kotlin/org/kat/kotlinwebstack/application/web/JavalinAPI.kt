@@ -38,7 +38,6 @@ class JavalinAPI(private val port: Int) : KoinComponent {
                     throw UnauthorizedResponse()
                 }
             }
-
             enableCorsForAllOrigins()
         }.start()
         return routes(app)

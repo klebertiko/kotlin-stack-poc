@@ -1,15 +1,11 @@
 package integration
 
 import com.github.kittinunf.fuel.Fuel
-import io.javalin.Javalin
 import junit.framework.TestCase
-import org.http4k.core.*
-import org.http4k.core.Status.Companion.BAD_REQUEST
-import org.http4k.core.Status.Companion.OK
-import org.http4k.filter.TrafficFilters
+import org.http4k.core.Method
+import org.http4k.core.Request
 import org.http4k.traffic.ReadWriteStream
 import org.http4k.traffic.Responder
-import org.kat.kotlinwebstack.application.web.JavalinAPI
 
 class JavalinIntegrationTest : TestCase() {
 
