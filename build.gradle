@@ -65,7 +65,7 @@ dependencies {
     implementation 'org.koin:koin-test:1.0.2'
 
     implementation 'com.github.kittinunf.fuel:fuel:1.15.1'
-    implementation 'com.github.kittinunf.fuel:fuel-coroutines:1.15.1'
+//    implementation 'com.github.kittinunf.fuel:fuel-coroutines:1.15.1'
     implementation 'com.github.kittinunf.fuel:fuel-jackson:1.15.1'
     implementation 'com.github.kittinunf.fuel:fuel-gson:1.15.1'
 
@@ -130,7 +130,7 @@ test {
 }
 
 detekt {
-    toolVersion = '1.0.0-RC12'
+    toolVersion = '1.0.0-RC14'
     input = files('src/main/kotlin')
     filters = '.*/resources/.*,.*/build/.*'
     reports {
